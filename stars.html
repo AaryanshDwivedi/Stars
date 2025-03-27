@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zodiac Personality Traits</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #93a8fb, #4000ef);
+            color: white;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+        select, button {
+            font-size: 18px;
+            padding: 10px;
+            border-radius: 5px;
+            border: none;
+            margin: 10px 0;
+            cursor: pointer;
+            width: 80%;
+            max-width: 300px;
+        }
+        button {
+            background-color: #ff6f61;
+            color: white;
+        }
+        .card {
+            display: none;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.2);
+            margin-top: 20px;
+            width: 90%;
+            max-width: 400px;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <h1>What's Your Zodiac Sign?</h1>
+    <select id="zodiacSelect">
+        <option value="" disabled selected>Select your sign</option>
+        <option value="Aries">Aries</option>
+        <option value="Taurus">Taurus</option>
+        <option value="Gemini">Gemini</option>
+        <option value="Cancer">Cancer</option>
+        <option value="Leo">Leo</option>
+        <option value="Virgo">Virgo</option>
+        <option value="Libra">Libra</option>
+        <option value="Scorpio">Scorpio</option>
+        <option value="Sagittarius">Sagittarius</option>
+        <option value="Capricorn">Capricorn</option>
+        <option value="Aquarius">Aquarius</option>
+        <option value="Pisces">Pisces</option>
+    </select>
+    <button onclick="showTrait()">Discover</button>
+    <div class="card" id="resultCard">
+        <h2 id="zodiacTitle"></h2>
+        <p id="zodiacTrait"></p>
+    </div>
+
+    <script>
+        
+        const traits = {
+            
+            Aries: "<strong><h3>♈ Aries -The Warrior</h3><h4> (March 21 - April 19)</h4></strong><center>Personality😎</center><br> Aries are natural-born leaders with an unstoppable drive. Bold and adventurous, they thrive on challenges and are known for their spontaneity and passion. Their assertive nature is both a strength and a challenge when it comes to compromise.<br><br><strong>Strengths💪:</strong> Confident, courageous, determined, enthusiastic, honest, energetic<br><strong>Weaknesses😩:</strong> Impatient, impulsive, short-tempered, aggressive<br><br><strong>Best Matches💞:</strong><ul><li>Leo ♌: Leo’s magnetism and strong presence ignite Aries’ passion.</li><li> Sagittarius ♐: Their shared love for adventure and risk-taking creates a dynamic, exciting pairing.</li></ul>",
+            Taurus: "<strong><h3>♉ Taurus -The Stabilizer</h3><h4> (April 20 - May 20)</h4></strong><center>Personality😎</center><br> Taurus is all about stability, comfort, and indulgence in life’s pleasures. They value loyalty and build relationships on solid foundations. Sensual and practical, Taurus also appreciates a partner who brings a spark of passion—even if it contrasts with their grounded nature.<br><br><strong>Strengths💪:</strong> Reliable, patient, practical, devoted, responsible, stable<br><strong>Weaknesses😩:</strong> Stubborn, possessive, materialistic, resistant to change<br><br><strong>Best Matches💞:</strong><ul><li>Virgo ♍: Virgo’s meticulous nature and subtle charm complement Taurus’ need for stability while adding intellectual stimulation.</li><li>Scorpio ♏: The magnetic, intense energy of Scorpio creates a deep, passionate bond that balances Taurus’ steady nature with fiery chemistry.</li></ul>",
+            Gemini: "<strong><h3>♊ Gemini -The Communicator</h3><h4> (May 21 - June 20)</h4></strong><center>Personality😎</center><br> Gemini is the social butterfly—witty, curious, and ever-adaptable. They crave mental stimulation and variety, often switching gears quickly. In relationships, Gemini looks for a partner who can both challenge and charm them through engaging conversation and spontaneity.<br><br><strong>Strengths💪:</strong> Adaptable, intelligent, outgoing, curious, witty, expressive<br><strong>Weaknesses😩:</strong> Inconsistent, indecisive, restless, superficial<br><br><strong>Best Matches💞:</strong><ul><li>Libra ♎: Libra’s diplomatic charm and balanced approach provide the intellectual rapport that sparks Gemini’s interest.</li><li>Aquarius ♒: Their shared innovative thinking and love of unconventional ideas create a vibrant, stimulating connection.</li></ul>",
+            Cancer: "<strong><h3>♋ Cancer -The Nurturer</h3><h4> (June 21 - July 22)</h4></strong><center>Personality😎</center><br> Cancer is deeply emotional and nurturing, placing family and home at the center of life. They crave security and are highly intuitive, though their sensitivity can sometimes lead to moodiness. In love, they long for deep emotional resonance and trust.<br><br><strong>Strengths💪:</strong> Loyal, empathetic, protective, intuitive, caring, imaginative<br><strong>Weaknesses😩:</strong> Moody, overly sensitive, clingy, insecure<br><br><strong>Best Matches💞:</strong><ul><li>Scorpio ♏: Scorpio’s intensity and passion meet Cancer’s emotional depth, creating a bond of profound understanding and attraction.</li><li>Capricorn ♑: The classic opposites attract here—Capricorn’s ambition and steadiness offer a grounding balance to Cancer’s emotional warmth, sparking both attraction and growth.</li></ul>",
+            Leo: "<strong><h3>♌ Leo -The King/Queen</h3><h4> (July 23 - August 22)</h4></strong><center>Personality😎</center><br> Leos are charismatic, bold, and fiercely independent. Known for their leadership qualities, they exude confidence and enjoy being the center of attention. While they can sometimes come across as self-centered, their warmth, loyalty, and generosity make them natural-born leaders and great partners.<br><br><strong>Strengths💪:</strong> Confident, courageous, generous, creative, passionate, loyal<br><strong>Weaknesses😩:</strong> Arrogant, stubborn, dramatic, self-centered, possessive<br><br><strong>Best Matches💞:</strong><ul><li>Aries ♈: The fiery, bold energy of Aries complements Leo’s natural charisma, creating a passionate and dynamic partnership.</li><li>Sagittarius ♐: Sagittarius’ adventurous and free-spirited nature aligns well with Leo’s enthusiasm, leading to an exciting and harmonious relationship.</li></ul>",
+            Libra: "<strong><h3>♎ Libra -The Diplomat</h3><h4> (September 23 - October 22)</h4></strong><center>Personality😎</center><br> Libra exudes charm, grace, and a desire for balance in all relationships. They thrive in social settings and have a keen eye for beauty and harmony. While they can sometimes be indecisive, their pursuit of fairness makes them natural mediators and engaging partners.<br><br><strong>Strengths💪:</strong> Charming, diplomatic, fair-minded, social, artistic, cooperative<br><strong>Weaknesses😩:</strong> Indecisive, avoids confrontation, self-pitying, unreliable<br><br><strong>Best Matches💞:</strong><ul><li>Aries ♈: As opposites on the zodiac wheel, Libra and Aries experience a magnetic push–pull dynamic where passion and balance often emerge from their differences</li><li>Aquarius ♒: Aquarius’ innovative spirit and forward-thinking nature captivate Libra, whose desire for social and intellectual harmony finds a perfect counterpart.</li></ul>",
+            Scorpio: "<strong><h3>♏ Scorpio -The Transformer</h3><h4> (October 23 - November 21)</h4></strong><center>Personality😎</center><br> Scorpio is known for its intensity and passion. With a magnetic presence and an air of mystery, Scorpios crave deep, transformative connections. While they can be guarded and sometimes controlling, their capacity for loyalty and intimacy makes them unforgettable partners.<br><br><strong>Strengths💪:</strong> Passionate, resourceful, brave, determined, loyal, intuitive<br><strong>Weaknesses😩:</strong> Jealous, secretive, possessive, manipulative<br><br><strong>Best Matches💞:</strong><ul><li>Taurus ♉: The natural, physical magnetism between Scorpio and Taurus creates an intense and sensual bond that thrives on mutual attraction and contrasting energies.</li><li>Pisces ♓: Pisces’ empathetic and dreamy nature resonates with Scorpio’s emotional depth, allowing for a profoundly transformative and magnetic connection.</li></ul>",
+            Sagittarius: "<strong><h3>♐ Sagittarius -The Explorer</h3><h4> (November 22 - December 21)</h4></strong><center>Personality😎</center><br> Sagittarius is an eternal optimist with an insatiable thirst for freedom and adventure. They are honest, outgoing, and always ready for the next escapade.<br><br><strong>Strengths💪:</strong> Adventurous, optimistic, independent, enthusiastic, humorous, honest<br><strong>Weaknesses😩:</strong> Impatient, tactless, careless, commitment-phobic<br><br><strong>Best Matches💞:</strong><ul><li>Gemini ♊: Gemini’s adaptability and quick wit provide the mental stimulation that Sagittarius craves, while their shared love for exploration sparks endless adventure.</li><li>Aquarius ♒: Both freedom-loving and unconventional, Aquarius offers fresh ideas and a refreshing outlook that keeps Sagittarius excited and inspired.</li></ul>"
+           , Virgo: "<strong><h3>♍ Virgo -The Perfectionist</h3><h4> (August 23 - September 22)</h4></strong><center>Personality😎</center><br> Virgos are analytical, detail-oriented, and practical. They take pride in being reliable and methodical while seeking perfection in every aspect of life. In relationships, Virgo appreciates a partner who can blend intellectual engagement with a touch of spontaneity to lighten their meticulous routine.<br><br><strong>Strengths💪:</strong> Practical, analytical, reliable, intelligent, hard-working, kind<br><strong>Weaknesses😩:</strong> Overly critical, reserved, perfectionist, overly cautious<br><br><strong>Best Matches💞:</strong><ul><li>Taurus ♉: Taurus’ steady, sensual nature perfectly complements Virgo’s need for order and consistency while adding warmth to their careful world.</li><li>Pisces ♓: As opposites, Pisces’ dreaminess and emotional fluidity balance Virgo’s rationality, sparking both attraction and transformative growth.</li></ul>"
+
+            ,Capricorn: "<strong><h3>♑ Capricorn -The Achiever</h3><h4> (December 22 - January 19)</h4></strong><center>Personality😎</center><br> Capricorns are disciplined, ambitious, and pragmatic. They value structure and hard work, often setting high goals for themselves. Beneath their serious exterior lies a caring nature that seeks a partner who can provide emotional support and share in their pursuit of success.<br><br><strong>Strengths💪:</strong> Disciplined, responsible, practical, determined, patient, strategic<br><strong>Weaknesses😩:</strong> Workaholic, rigid, pessimistic, emotionally distant<br><br><strong>Best Matches💞:</strong><ul><li>Cancer ♋: The nurturing, sensitive nature of Cancer offers the emotional balance that Capricorn sometimes lacks, creating a classic “opposites attract” dynamic filled with growth and understanding.</li><li>Taurus ♉: Taurus’ grounded sensuality complements Capricorn’s ambition, forging a relationship based on mutual respect, stability, and a deep physical connection.</li></ul>",
+    Aquarius: "<strong><h3>♒ Aquarius -The Visionary</h3><h4> (January 20 - February 18)</h4></strong><center>Personality😎</center><br> Aquarius is fiercely independent and values originality. They are forward-thinking and thrive on innovation, often marching to the beat of their own drum. While sometimes seen as aloof, Aquarians are deeply committed to causes and value authenticity in all relationships.<br><br><strong>Strengths💪:</strong> Innovative, intellectual, independent, humanitarian, free-spirited<br><strong>Weaknesses😩:</strong> Aloof, emotionally detached, unpredictable, rebellious<br><br><strong>Best Matches💞:</strong><ul><li>Gemini ♊: Gemini’s mental agility and playful communication style perfectly complement Aquarius’ innovative ideas, resulting in a relationship full of exciting conversations and discoveries.</li><li>Leo ♌: The creative and bold nature of Leo draws Aquarius out of their comfort zone, creating a stimulating partnership where individuality and admiration flourish.</li></ul>",
+    Pisces: "<strong><h3>♓ Pisces -The Dreamer</h3><h4> (February 19 - March 20)</h4></strong><center>Personality😎</center><br> Pisces are dreamy, artistic, and deeply empathetic. They often live in a world of rich emotions and imagination. While highly sensitive and sometimes prone to escapism, Pisces seek meaningful, soulful connections that honor their romantic and intuitive nature.<br><br><strong>Strengths💪:</strong> Compassionate, artistic, intuitive, gentle, wise, empathetic<br><strong>Weaknesses😩:</strong> Overly sensitive, escapist, indecisive, unrealistic<br><br><strong>Best Matches💞:</strong><ul><li>Scorpio ♏: Scorpio’s intensity and depth resonate with Pisces on a profound emotional level, creating a bond that is both magnetic and transformative.</li><li>Virgo ♍: Virgo’s practicality and attention to detail offer Pisces the stability they need, balancing idealism with structure for a nurturing and growth-oriented connection.</li></ul>"
+}
+
+
+        function showTrait() {
+            document.body.style.justifyContent = "flex-start";
+            const select = document.getElementById('zodiacSelect');
+            const card = document.getElementById('resultCard');
+            const title = document.getElementById('zodiacTitle');
+            const trait = document.getElementById('zodiacTrait');
+            
+            const zodiac = select.value;
+            if (zodiac) {
+                // title.textContent = zodiac;
+                trait.innerHTML = traits[zodiac]; // Use innerHTML to parse HTML tags
+                card.style.display = 'block';
+            } else {
+                alert("Please select your zodiac sign.");
+            }
+        }
+    </script>
+</body>
+</html>
